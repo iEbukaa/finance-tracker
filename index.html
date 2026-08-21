@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Basic page information -->
+    <meta charset="UTF-8" />
+
+    <!-- Makes the website responsive on phones/tablets -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Personal Finance Tracker</title>
+
+    <!-- Connect our CSS file -->
+    <link rel="stylesheet" href="pet.css" />
+  </head>
+
+  <body>
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="header">
+      <h1>Your Personal Finance Tracker</h1>
+
+      <!-- Theme buttons -->
+      <div class="theme-buttons">
+        <button id="light-btn" title="Light mode">🌙</button>
+
+        <button id="dark-btn" title="Dark mode">🌞</button>
+      </div>
+    </header>
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
+
+    <main class="container">
+      <!-- =================================================
+             LEFT SIDE - DASHBOARD
+        ================================================== -->
+
+      <section class="dashboard-section">
+        <!-- FILTER BUTTONS -->
+
+        <div class="filter-buttons">
+          <button class="filter active" data-filter="all">All</button>
+
+          <button class="filter" data-filter="income">Income</button>
+
+          <button class="filter" data-filter="expense">Expenses</button>
+        </div>
+
+        <!-- SEARCH AND MONTH FILTER -->
+
+        <div class="search-area">
+          <!-- Search transactions by name/category -->
+          <input
+            type="search"
+            id="search-input"
+            placeholder="Search transactions..."
+          />
+
+          <!-- Filter transactions by month -->
+          <input type="month" id="month-filter" />
+
+          <!-- Clear month filter -->
+          <button id="clear-month-btn" class="small-btn">Clear Month</button>
+        </div>
+
+        <!-- =================================================
+                 SUMMARY CARDS
+            ================================================== -->
+
+        <div class="summary">
+          <!-- Total income -->
+
+          <div class="summary-card income-card">
+            <span> Income </span>
+
+            <strong id="income-total"> ₦0 </strong>
+          </div>
+
+          <!-- Total expenses -->
+
+          <div class="summary-card expense-card">
+            <span> Expenses </span>
+
+            <strong id="expense-total"> ₦0 </strong>
+          </div>
+
+          <!-- Current balance -->
+
+          <div class="summary-card balance-card">
+            <span> Balance </span>
+
+            <strong id="balance-total"> ₦0 </strong>
+          </div>
+        </div>
+
+        <!-- =================================================
+                 TRANSACTION LIST
+            ================================================== -->
+
+        <div class="transaction-list-container">
+          <div class="section-heading">
+            <h2>Transactions</h2>
+
+            <!-- Export transactions -->
+            <button id="export-btn" class="export-btn">Export CSV</button>
+          </div>
+
+          <!-- JavaScript will insert transactions here -->
+          <div id="transaction-list">
+            <p class="empty-message">No transactions yet.</p>
+          </div>
+
+          <!-- Clear everything -->
+          <button id="clear-all-btn" class="clear-all-btn">
+            Clear All Transactions
+          </button>
+        </div>
+
+        <!-- =================================================
+                 STATISTICS
+            ================================================== -->
+
+        <section class="statistics">
+          <h2>Financial Statistics</h2>
+
+          <div class="stats-grid">
+            <div class="stat-box">
+              <span> Total Transactions </span>
+
+              <strong id="transaction-count"> 0 </strong>
+            </div>
+
+            <div class="stat-box">
+              <span> Average Expense </span>
+
+              <strong id="average-expense"> ₦0 </strong>
+            </div>
+
+            <div class="stat-box">
+              <span> Biggest Expense </span>
+
+              <strong id="biggest-expense"> ₦0 </strong>
+            </div>
+
+            <div class="stat-box">
+              <span> Biggest Income </span>
+
+              <strong id="biggest-income"> ₦0 </strong>
+            </div>
+          </div>
+        </section>
+
+        <!-- =================================================
+                 CHARTS
+            ================================================== -->
+
+        <section class="charts-section">
+          <h2>Financial Overview</h2>
+
+          <!-- Income vs Expense chart -->
+
+          <div class="chart-container">
+            <h3>Income vs Expenses</h3>
+
+            <canvas id="income-expense-chart"></canvas>
+          </div>
+
+          <!-- Category chart -->
+
+          <div class="chart-container">
+            <h3>Spending by Category</h3>
+
+            <canvas id="category-chart"></canvas>
+          </div>
+        </section>
+      </section>
+
+      <!-- =================================================
+             RIGHT SIDE - FORM
+        ================================================== -->
+
+      <section class="form-section">
+        <h2 id="form-title">Add Transaction</h2>
+
+        <form id="transaction-form">
+          <!-- Transaction name -->
+
+          <div class="form-group">
+            <label for="transaction-name"> Transaction Name </label>
+
+            <input
+              type="text"
+              id="transaction-name"
+              placeholder="Enter Transaction Name"
+              required
+            />
+          </div>
+
+          <!-- Amount -->
+
+          <div class="form-group">
+            <label for="amount"> Amount </label>
+
+            <input
+              type="number"
+              id="amount"
+              placeholder="Enter Transaction Amount"
+              min="1"
+              step="0.01"
+              required
+            />
+          </div>
+
+          <!-- Income / Expense -->
+
+          <div class="form-group">
+            <label for="type"> Type </label>
+
+            <select id="type" required>
+              <option value="">Select Transaction Type</option>
+
+              <option value="income">Income</option>
+
+              <option value="expense">Expense</option>
+            </select>
+          </div>
+
+          <!-- Category -->
+
+          <div class="form-group">
+            <label for="category"> Category </label>
+
+            <select id="category" required>
+              <option value="">Select Transaction Category</option>
+
+              <option value="salary">Salary</option>
+
+              <option value="business">Business</option>
+
+              <option value="food">Food</option>
+
+              <option value="transport">Transport</option>
+
+              <option value="shopping">Shopping</option>
+
+              <option value="bills">Bills</option>
+
+              <option value="education">Education</option>
+
+              <option value="entertainment">Entertainment</option>
+
+              <option value="health">Health</option>
+
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <!-- Date -->
+
+          <div class="form-group">
+            <label for="date"> Date </label>
+
+            <input type="date" id="date" required />
+          </div>
+
+          <!-- Form buttons -->
+
+          <div class="form-buttons">
+            <button type="submit" class="submit-btn" id="submit-btn">
+              Add Transaction
+            </button>
+
+            <!-- Only appears when editing -->
+
+            <button
+              type="button"
+              id="cancel-edit-btn"
+              class="cancel-btn hidden"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <!-- Connect JavaScript -->
+    <script src="pet.js"></script>
+  </body>
+</html>
